@@ -29,6 +29,10 @@ a public database port.
    included a `phone` column, run `sql/remove-users-phone.sql` once as a
    MariaDB administrator. Do this after deploying the API version that no
    longer selects or inserts that column.
+   If your app database already exists, run
+   `sql/set-house-carryover-points.sql` as a MariaDB administrator to set the
+   opening scores to 44 for Eerhof and 34 for Edelhof. The view then adds new
+   attendance points on top of those opening totals.
 3. Add `deploy/house-points-api.compose.yml` as an additional Compose file:
 
    ```sh
