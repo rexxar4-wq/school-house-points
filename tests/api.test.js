@@ -7,7 +7,7 @@ process.env.DB_NAME = "school_house_points_test";
 process.env.DB_USER = "test";
 process.env.DB_PASSWORD = "test";
 
-const { app, pool } = require("../api/server");
+const { app, pool, validatePassword } = require("../api/server");
 let server;
 let baseUrl;
 
@@ -84,4 +84,17 @@ test("rejects learner registration with an empty grade", async () => {
 
   assert.equal(response.status, 400);
   assert.deepEqual(await response.json(), { error: "Grade must be a whole number from 0 to 12." });
+});
+
+test("accepts passwords from 8 through 72 characters", () => {
+  assert.doesNotThrow(() => validatePassword("12345678"));
+  assert.doesNotThrow(() => validatePassword("a".repeat(72)));
+  assert.throws(() => validatePassword("1234567"), {
+    status: 400,
+    message: "Password must be between 8 and 72 characters.",
+  });
+  assert.throws(() => validatePassword("é".repeat(37)), {
+    status: 400,
+    message: "Password must be between 8 and 72 characters.",
+  });
 });

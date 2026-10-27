@@ -78,11 +78,11 @@ function requiredText(value, label, maxLength) {
 function validatePassword(password) {
   if (
     typeof password !== "string"
-    || password.length < 12
+    || password.length < 8
     || password.length > 72
     || Buffer.byteLength(password, "utf8") > 72
   ) {
-    throw apiError(400, "Password must be between 12 and 72 characters.");
+    throw apiError(400, "Password must be between 8 and 72 characters.");
   }
 }
 
@@ -431,4 +431,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { app, pool };
+module.exports = { app, pool, validatePassword };

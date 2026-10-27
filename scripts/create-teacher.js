@@ -54,12 +54,12 @@ async function main() {
   const name = await ask("First name: ");
   const surname = await ask("Surname: ");
   const email = (await ask("Email: ")).toLowerCase();
-  const password = await askPassword("Password (12-72 characters): ");
+  const password = await askPassword("Password (8-72 characters): ");
   if (!name || name.length > 100 || !surname || surname.length > 100) {
     throw new Error("Name and surname are required and must be at most 100 characters.");
   }
-  if (password.length < 12 || password.length > 72 || Buffer.byteLength(password, "utf8") > 72) {
-    throw new Error("Password must be between 12 and 72 characters.");
+  if (password.length < 8 || password.length > 72 || Buffer.byteLength(password, "utf8") > 72) {
+    throw new Error("Password must be between 8 and 72 characters.");
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
     throw new Error("Enter a valid email address.");
