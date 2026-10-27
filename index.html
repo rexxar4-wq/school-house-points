@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -22,7 +22,6 @@
 
   <body>
     <div class="app-shell">
-
       <!-- ================= PREMIUM HEADER ================= -->
       <header class="app-header">
         <div class="header-left">
@@ -33,7 +32,6 @@
       </header>
 
       <main class="app-main">
-
         <!-- ================= AUTH SECTION ================= -->
         <section class="card" id="authSection">
           <div class="school-logo-wrapper">
@@ -47,8 +45,12 @@
 
           <div class="auth-tabs">
             <button class="btn btn-ghost" id="showLogin">Log in</button>
-            <button class="btn btn-ghost" id="showLearnerRegister">Learner registration</button>
-            <button class="btn btn-ghost" id="showTeacherRegister">Teacher registration</button>
+            <button class="btn btn-ghost" id="showLearnerRegister">
+              Learner registration
+            </button>
+            <button class="btn btn-ghost" id="showTeacherRegister">
+              Teacher registration
+            </button>
           </div>
 
           <!-- Login form -->
@@ -59,7 +61,12 @@
             </div>
             <div>
               <div class="label">Password</div>
-              <input class="input" type="password" id="loginPassword" required />
+              <input
+                class="input"
+                type="password"
+                id="loginPassword"
+                required
+              />
             </div>
             <div id="loginError" class="error mt-1"></div>
             <button class="btn btn-primary mt-2" type="submit">Log in</button>
@@ -83,10 +90,6 @@
                 <div class="label">Grade</div>
                 <input class="input" id="learnerGrade" type="number" required />
               </div>
-              <div>
-                <div class="label">Phone (optional)</div>
-                <input class="input" id="learnerPhone" />
-              </div>
             </div>
 
             <div>
@@ -104,12 +107,19 @@
               </div>
               <div>
                 <div class="label">Password</div>
-                <input class="input" id="learnerPassword" type="password" required />
+                <input
+                  class="input"
+                  id="learnerPassword"
+                  type="password"
+                  required
+                />
               </div>
             </div>
 
             <div id="learnerRegisterError" class="error mt-1"></div>
-            <button class="btn btn-primary mt-2" type="submit">Register learner</button>
+            <button class="btn btn-primary mt-2" type="submit">
+              Register learner
+            </button>
           </form>
 
           <!-- Teacher registration -->
@@ -132,11 +142,18 @@
 
             <div>
               <div class="label">Password</div>
-              <input class="input" id="teacherPassword" type="password" required />
+              <input
+                class="input"
+                id="teacherPassword"
+                type="password"
+                required
+              />
             </div>
 
             <div id="teacherRegisterError" class="error mt-1"></div>
-            <button class="btn btn-primary mt-2" type="submit">Register teacher</button>
+            <button class="btn btn-primary mt-2" type="submit">
+              Register teacher
+            </button>
           </form>
         </section>
 
@@ -163,7 +180,9 @@
         <!-- ================= TEACHER DASHBOARD ================= -->
         <section class="card hidden" id="teacherDashboard">
           <h2 class="card-title">Teacher dashboard</h2>
-          <p class="card-subtitle">Create events, check in learners, and view house points.</p>
+          <p class="card-subtitle">
+            Create events, check in learners, and view house points.
+          </p>
 
           <div class="flex mt-1">
             <button class="btn btn-ghost" id="tabEvents">Events</button>
@@ -186,7 +205,9 @@
                   <input class="input" id="eventDate" type="date" required />
                 </div>
               </div>
-              <button class="btn btn-primary mt-1" type="submit">Add event</button>
+              <button class="btn btn-primary mt-1" type="submit">
+                Add event
+              </button>
             </form>
 
             <h3 class="mt-2">All events</h3>
@@ -229,7 +250,11 @@
 
               <div>
                 <div class="label">Search name</div>
-                <input class="input" id="filterName" placeholder="Type a name" />
+                <input
+                  class="input"
+                  id="filterName"
+                  placeholder="Type a name"
+                />
               </div>
             </div>
 
@@ -249,12 +274,18 @@
           <!-- House Points Panel -->
           <div class="mt-2 hidden" id="teacherPointsPanel">
             <h3>House points</h3>
-            <p class="card-subtitle">These totals are only visible to teachers.</p>
+            <p class="card-subtitle">
+              These totals are only visible to teachers.
+            </p>
 
             <div class="house-points">
               <div class="house-card">
                 <div class="house-card-header">
-                  <img src="house-a-logo.png" alt="Eerhof logo" class="house-logo" />
+                  <img
+                    src="house-a-logo.png"
+                    alt="Eerhof logo"
+                    class="house-logo"
+                  />
                   <h4>Eerhof</h4>
                 </div>
                 <div class="points" id="houseAPoints">0</div>
@@ -262,7 +293,11 @@
 
               <div class="house-card">
                 <div class="house-card-header">
-                  <img src="house-b-logo.png" alt="Edelhof logo" class="house-logo" />
+                  <img
+                    src="house-b-logo.png"
+                    alt="Edelhof logo"
+                    class="house-logo"
+                  />
                   <h4>Edelhof</h4>
                 </div>
                 <div class="points" id="houseBPoints">0</div>
@@ -280,7 +315,7 @@
           navigator.serviceWorker
             .register("pwabuilder-sw.js")
             .catch((err) =>
-              console.log("Service Worker registration failed:", err)
+              console.log("Service Worker registration failed:", err),
             );
         });
       }
