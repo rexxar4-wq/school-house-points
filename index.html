@@ -14,10 +14,6 @@
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Firebase (compat version) -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   </head>
 
   <body>
@@ -40,7 +36,7 @@
 
           <h2 class="card-title">Welcome</h2>
           <p class="card-subtitle">
-            Log in or register as a learner or teacher.
+            Log in or register as a learner.
           </p>
 
           <div class="auth-tabs">
@@ -48,10 +44,10 @@
             <button class="btn btn-ghost" id="showLearnerRegister">
               Learner registration
             </button>
-            <button class="btn btn-ghost" id="showTeacherRegister">
-              Teacher registration
-            </button>
           </div>
+          <p class="card-subtitle">
+            Teacher accounts are created by the app administrator.
+          </p>
 
           <!-- Login form -->
           <form class="form-grid mt-2" id="loginForm">
@@ -88,7 +84,15 @@
             <div class="flex">
               <div>
                 <div class="label">Grade</div>
-                <input class="input" id="learnerGrade" type="number" required />
+                <input
+                  class="input"
+                  id="learnerGrade"
+                  type="number"
+                  min="0"
+                  max="12"
+                  step="1"
+                  required
+                />
               </div>
             </div>
 
@@ -111,9 +115,16 @@
                   class="input"
                   id="learnerPassword"
                   type="password"
+                  minlength="12"
+                  maxlength="72"
                   required
                 />
               </div>
+            </div>
+
+            <div>
+              <div class="label">Phone (optional)</div>
+              <input class="input" id="learnerPhone" type="tel" maxlength="32" />
             </div>
 
             <div id="learnerRegisterError" class="error mt-1"></div>
@@ -122,45 +133,13 @@
             </button>
           </form>
 
-          <!-- Teacher registration -->
-          <form class="form-grid mt-2 hidden" id="teacherRegisterForm">
-            <div class="flex">
-              <div>
-                <div class="label">Name</div>
-                <input class="input" id="teacherName" required />
-              </div>
-              <div>
-                <div class="label">Surname</div>
-                <input class="input" id="teacherSurname" required />
-              </div>
-            </div>
-
-            <div>
-              <div class="label">Email</div>
-              <input class="input" id="teacherEmail" type="email" required />
-            </div>
-
-            <div>
-              <div class="label">Password</div>
-              <input
-                class="input"
-                id="teacherPassword"
-                type="password"
-                required
-              />
-            </div>
-
-            <div id="teacherRegisterError" class="error mt-1"></div>
-            <button class="btn btn-primary mt-2" type="submit">
-              Register teacher
-            </button>
-          </form>
         </section>
 
         <!-- ================= LEARNER DASHBOARD ================= -->
         <section class="card hidden" id="learnerDashboard">
           <h2 class="card-title">Learner dashboard</h2>
           <div class="card-subtitle" id="learnerInfo"></div>
+          <button class="btn btn-ghost mt-1" id="learnerLogoutButton">Log out</button>
 
           <h3 class="mt-2">Active events</h3>
           <p class="card-subtitle">Your teacher will check you in at events.</p>
@@ -205,6 +184,7 @@
                   <input class="input" id="eventDate" type="date" required />
                 </div>
               </div>
+              <div id="createEventError" class="error"></div>
               <button class="btn btn-primary mt-1" type="submit">
                 Add event
               </button>
