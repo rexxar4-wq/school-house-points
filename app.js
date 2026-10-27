@@ -18,6 +18,10 @@ function showSection(sectionId) {
 function showAuthForm(which) {
   $("loginForm").classList.toggle("hidden", which !== "login");
   $("learnerRegisterForm").classList.toggle("hidden", which !== "learner");
+  $("showLogin").classList.toggle("is-active", which === "login");
+  $("showLogin").setAttribute("aria-pressed", String(which === "login"));
+  $("showLearnerRegister").classList.toggle("is-active", which === "learner");
+  $("showLearnerRegister").setAttribute("aria-pressed", String(which === "learner"));
 }
 
 function clearSession() {
@@ -161,6 +165,15 @@ function showTeacherPanel(which) {
   $("teacherEventsPanel").classList.toggle("hidden", which !== "events");
   $("teacherCheckInPanel").classList.toggle("hidden", which !== "checkin");
   $("teacherPointsPanel").classList.toggle("hidden", which !== "points");
+  const tabs = [
+    ["events", "tabEvents"],
+    ["checkin", "tabCheckIn"],
+    ["points", "tabPoints"],
+  ];
+  tabs.forEach(([panel, buttonId]) => {
+    $(buttonId).classList.toggle("is-active", panel === which);
+    $(buttonId).setAttribute("aria-pressed", String(panel === which));
+  });
 }
 
 async function handleLogin(event) {
@@ -199,7 +212,6 @@ async function handleLearnerRegister(event) {
           name: $("learnerName").value.trim(),
           surname: $("learnerSurname").value.trim(),
           grade: $("learnerGrade").value,
-          phone: $("learnerPhone").value.trim(),
           house: $("learnerHouse").value,
           email: $("learnerEmail").value.trim(),
           password: $("learnerPassword").value,

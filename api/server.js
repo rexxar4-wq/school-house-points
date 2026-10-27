@@ -94,7 +94,6 @@ function publicUser(row) {
     surname: row.surname,
     email: row.email,
     grade: row.grade,
-    phone: row.phone,
     house: row.house_code,
   };
 }
@@ -121,7 +120,7 @@ async function requireAuth(req, res, next) {
 
     const tokenHash = createHash("sha256").update(match[1]).digest("hex");
     const [rows] = await pool.execute(
-      `SELECT u.user_id, u.role, u.name, u.surname, u.email, u.grade, u.phone, u.house_code
+      `SELECT u.user_id, u.role, u.name, u.surname, u.email, u.grade, u.house_code
        FROM auth_sessions AS s
        JOIN users AS u ON u.user_id = s.user_id
        WHERE s.token_hash = ? AND s.expires_at > UTC_TIMESTAMP(3)`,
@@ -156,16 +155,12 @@ async function registerLearner(req, res) {
     : typeof gradeValue === "string" && /^\d+$/.test(gradeValue.trim())
       ? Number(gradeValue.trim())
       : Number.NaN;
-  const phone = typeof body.phone === "string" ? body.phone.trim() || null : null;
-
   if (!validEmail(email)) throw apiError(400, "Enter a valid email address.");
   validatePassword(password);
   if (!Number.isInteger(grade) || grade < 0 || grade > 12) {
     throw apiError(400, "Grade must be a whole number from 0 to 12.");
   }
   if (!HOUSE_CODES.has(house)) throw apiError(400, "Choose a valid house.");
-  if (phone && phone.length > 32) throw apiError(400, "Phone number is too long.");
-
   const userId = randomUUID();
   const passwordHash = await bcrypt.hash(password, 12);
   const connection = await pool.getConnection();
@@ -175,9 +170,9 @@ async function registerLearner(req, res) {
     await connection.beginTransaction();
     transactionStarted = true;
     await connection.execute(
-      `INSERT INTO users (user_id, role, name, surname, email, password_hash, grade, phone, house_code)
-       VALUES (?, 'learner', ?, ?, ?, ?, ?, ?, ?)`,
-      [userId, name, surname, email, passwordHash, grade, phone, house],
+      `INSERT INTO users (user_id, role, name, surname, email, password_hash, grade, house_code)
+       VALUES (?, 'learner', ?, ?, ?, ?, ?, ?)`,
+      [userId, name, surname, email, passwordHash, grade, house],
     );
     token = await createSession(userId, connection);
     await connection.commit();
@@ -190,7 +185,7 @@ async function registerLearner(req, res) {
     connection.release();
   }
 
-  const user = { id: userId, role: "learner", name, surname, email, grade, phone, house };
+  const user = { id: userId, role: "learner", name, surname, email, grade, house };
   res.status(201).json({ user, token });
 }
 
@@ -207,7 +202,7 @@ async function login(req, res) {
   }
 
   const [rows] = await pool.execute(
-    `SELECT user_id, role, name, surname, email, password_hash, grade, phone, house_code
+    `SELECT user_id, role, name, surname, email, password_hash, grade, house_code
      FROM users WHERE email = ?`,
     [email],
   );

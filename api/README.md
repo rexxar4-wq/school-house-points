@@ -25,6 +25,10 @@ a public database port.
    The `%` host allows the API's changing Docker IP to connect; access is still
    confined to the private Compose network because MariaDB's port is not public.
    Do not use the existing general-purpose `webuser` for this app.
+   If you already created the earlier version of the `users` table that
+   included a `phone` column, run `sql/remove-users-phone.sql` once as a
+   MariaDB administrator. Do this after deploying the API version that no
+   longer selects or inserts that column.
 3. Add `deploy/house-points-api.compose.yml` as an additional Compose file:
 
    ```sh

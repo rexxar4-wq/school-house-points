@@ -77,8 +77,8 @@ async function main() {
     const userId = randomUUID();
     const passwordHash = await bcrypt.hash(password, 12);
     await pool.execute(
-      `INSERT INTO users (user_id, role, name, surname, email, password_hash, grade, phone, house_code)
-       VALUES (?, 'teacher', ?, ?, ?, ?, NULL, NULL, NULL)`,
+      `INSERT INTO users (user_id, role, name, surname, email, password_hash, grade, house_code)
+       VALUES (?, 'teacher', ?, ?, ?, ?, NULL, NULL)`,
       [userId, name, surname, email, passwordHash],
     );
     console.log(`Teacher account created for ${email}.`);
